@@ -1,0 +1,25 @@
+#!/usr/bin/env python2
+
+import os
+import sys
+
+""" Rotater uses convert which takes an argument (Convert can be switched out to other engines)
+of clockwise in degrees when doing rotations as well as extension for the type of file it will look for """
+def rotater(ccDegrees, ext_type):
+  extension = "." + ext_type
+  print extension
+  files = os.listdir(os.curdir)
+  for f in files:
+     real_file = os.path.realpath(f)
+     file_type = os.path.splitext(real_file)
+     if file_type[1] == extension:
+         cmd = "convert %s -rotate %s  %s" % (real_file, ccDegrees, real_file)
+         print cmd
+         os.system(cmd)
+
+if __name__ == "__main__":
+        if (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+            print "Usage: rotater <rotation_clockwise_degrees> <file_ext_type"
+            print "Example: rotater 90 jpg"
+            sys.exit()
+        rotater(sys.argv[1], sys.argv[2])
